@@ -1,0 +1,18 @@
+type Items @model @auth(rules: [{allow: public}]) @key(name: "byTodo", fields: ["todoID"]) {
+  id: ID!
+  name: String
+  status: String
+  status_date_changed: AWSDate
+  todoID: ID!
+}
+
+type Todo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  owner: String
+  date: AWSDate!
+  date_changed: AWSDate
+  date_freq: Int
+  shared: Boolean
+  status: String
+  Items_todo: [Items] @connection(keyName: "byTodo", fields: ["id"])
+}

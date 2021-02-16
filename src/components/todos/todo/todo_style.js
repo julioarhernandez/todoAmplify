@@ -1,5 +1,10 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
-export const todoStyled = styled.div`
+export const TodoStyled = styled.div`
     display: block;
+    ${props => !(props.open) && css`
+        .TodoStyled_content {
+            display: none;
+        }
+    `}
 `;

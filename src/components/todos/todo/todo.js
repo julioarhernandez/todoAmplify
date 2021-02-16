@@ -1,17 +1,28 @@
-import React from 'react';
-import {todoStyled} from "./todo_style";
+import React, {useState} from 'react';
+import {TodoStyled} from "./todo_style";
 
 const Todo = ({children}) => {
+    const [opened, setOpened] = useState(false);
+
+    const toggleOpen = () => {
+        setOpened(() => !opened);
+    };
     return (
-        <todoStyled>
-            <h1>title</h1>
-            <div>
-                {children}
+        <TodoStyled open={opened}>
+            <div className="TodoStyled_header"
+                 onClick={() => toggleOpen()}>
+                <h1>title</h1>
             </div>
-            <footer>
-                close
-            </footer>
-        </todoStyled>
+            <div className="TodoStyled_content">
+                <div>
+                    {children}
+                </div>
+                <footer>
+                    close
+                </footer>
+            </div>
+
+        </TodoStyled>
     );
 };
 

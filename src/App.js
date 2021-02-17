@@ -8,6 +8,8 @@ import {Todo} from "./components/todos/todo";
 import {AppStyled} from './App_styles';
 import {Item} from "./components/items/item";
 import {Separator} from "./components/UI/separator";
+import ItemNew from "./components/items/item/itemNew";
+import TodoNew from "./components/todos/todo/todoNew";
 
 Amplify.configure(awsconfig)
 
@@ -21,10 +23,15 @@ function App() {
             <Item/>
             <Separator/>
             <Item/>
+            <Separator/>
+            <ItemNew/>
         </Todo>
         <Todo>
             <Item/>
         </Todo>
+        <TodoNew />
+        <button type="button" className="AppStyled_add-button">+</button>
+
     </AppStyled>
   );
 }

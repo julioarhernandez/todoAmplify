@@ -1,10 +1,8 @@
 import React from 'react';
 
-const Separator = () => {
+const Separator = ({classType}) => {
     return (
-        <hr>
-
-        </hr>
+        <hr className={classType} />
     );
 };
 

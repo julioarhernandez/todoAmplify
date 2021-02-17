@@ -18,10 +18,9 @@ const Todo = ({children}) => {
                     {children}
                 </div>
                 <footer>
-                    close
+                    Edit
                 </footer>
             </div>
-
         </TodoStyled>
     );
 };

@@ -7,4 +7,8 @@ export const TodoStyled = styled.div`
             display: none;
         }
     `}
+    footer{
+        margin-top: 20px;
+        text-align: right;
+    }
 `;

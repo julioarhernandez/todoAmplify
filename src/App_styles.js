@@ -67,6 +67,38 @@ export const AppStyled = styled.div`
         border-bottom: 4px solid black;
         text-decoration: none;
     }
+    .GlobalStyled_checkbox {
+        position: relative;
+        &:before,
+        &:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            display: block;
+            position: absolute;
+            top: -4px;
+            border-radius: 4px;
+            background-color: #8d8d8d;
+        }
+        &:checked { 
+            &:before {
+                background-color: black;
+            }
+            &:after {
+                display: inline-block;
+                transform: rotate(45deg);
+                height: 11px;
+                width: 5px;
+                border-bottom: 3px solid #ffffff;
+                border-right: 3px solid #ffffff;
+                background-color: transparent;
+                position: absolute;
+                left: 6px;
+                border-radius: 0;
+                top: -3px;
+            }
+        }
+    }
     .GlobalStyled_modal {
         visibility: hidden;
         position: fixed;

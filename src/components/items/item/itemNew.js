@@ -8,7 +8,7 @@ const ItemNew = () => {
     return (
         <ItemNewStyled>
             <div className="ItemNewStyled_checkbox">
-                <input type="checkbox" name="check"/>
+                <input type="checkbox" name="check" className="GlobalStyled_checkbox"/>
             </div>
             <div className="ItemNewStyled_item">
                 <input type="text" name="newItem" />

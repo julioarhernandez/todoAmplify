@@ -11,31 +11,36 @@ import {Separator} from "./components/UI/separator";
 import ItemNew from "./components/items/item/itemNew";
 import TodoNew from "./components/todos/todo/todoNew";
 import TodoEdit from "./components/todos/todo/todoEdit";
+import {Modal} from "./components/UI/modal";
 
 Amplify.configure(awsconfig)
 
 function App() {
 
-  return (
-    <AppStyled>
-        <Todo>
-            <Item/>
-            <Separator/>
-            <Item/>
-            <Separator/>
-            <Item/>
-            <Separator/>
-            <ItemNew/>
-        </Todo>
-        <Todo>
-            <Item/>
-        </Todo>
-        <TodoNew />
-        <TodoEdit />
-        <button type="button" className="AppStyled_add-button">+</button>
+    return (
+        <AppStyled>
+            <Todo>
+                <Item/>
+                <Separator/>
+                <Item/>
+                <Separator/>
+                <Item/>
+                <Separator/>
+                <ItemNew/>
+            </Todo>
+            <Todo>
+                <Item/>
+            </Todo>
+            <Modal>
+                <TodoNew/>
+            </Modal>
+            <Modal>
+                <TodoEdit/>
+            </Modal>
+            <button type="button" className="AppStyled_add-button">+</button>
 
-    </AppStyled>
-  );
+        </AppStyled>
+    );
 }
 
 export default App;

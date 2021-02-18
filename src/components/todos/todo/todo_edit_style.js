@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const TodoEditStyled = styled.div`
     display: block;
     padding: 15px;
-    background-color: rgb(128 128 128 / 20%);
+    background-color: white;
     border-radius: 5px;
     &:not(:last-child){
         margin-bottom: 20px;

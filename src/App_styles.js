@@ -58,4 +58,22 @@ export const AppStyled = styled.div`
     .GlobalStyled_form-group_item:not(:last-child) { 
         margin-right: 10px;
     }
+    .GlobalStyled_modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgb(0 0 0 / 20%);
+        > div {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            max-width: calc(100% - 60px);
+            width: 100%;
+            left: 50%;
+            box-shadow: 0px 4px 20px 5px rgb(0 0 0 / 29%), 0 19px 43px 0px rgb(0 0 0 / 15%);
+        }
+        
+    }
 `;

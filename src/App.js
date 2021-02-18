@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import Amplify from 'aws-amplify'
 import awsconfig from './aws-exports'
 
@@ -17,9 +18,11 @@ Amplify.configure(awsconfig)
 
 function App() {
 
+    const [modalView, setModalView] = useState('new');
+
     return (
         <AppStyled>
-            <Todo>
+            <Todo setModalView={setModalView}>
                 <Item/>
                 <Separator/>
                 <Item/>
@@ -28,16 +31,16 @@ function App() {
                 <Separator/>
                 <ItemNew/>
             </Todo>
-            <Todo>
+            <Todo setModalView={setModalView}>
                 <Item/>
             </Todo>
-            <Modal>
+            <Modal classType={ modalView === 'new' && 'show'} setModalView={setModalView}>
                 <TodoNew/>
             </Modal>
-            <Modal>
+            <Modal classType={modalView === 'edit' && 'show'} setModalView={setModalView}>
                 <TodoEdit/>
             </Modal>
-            <button type="button" className="AppStyled_add-button">+</button>
+            <button type="button" className="AppStyled_add-button" onClick={() => setModalView('new')}>+</button>
 
         </AppStyled>
     );

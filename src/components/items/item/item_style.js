@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const ItemStyled = styled.div`
     display: flex;
     align-items: center;
+    min-height: 40px;
     .ItemStyled_item {
         position: relative;
         margin-right: 10px;

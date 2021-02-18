@@ -6,6 +6,7 @@ export const AppStyled = styled.div`
     min-height: calc(100vh - 20px);
     hr{
         border: none;
+        margin: 3px;
     }
     .AppStyled_add-button {
         position: absolute;
@@ -58,21 +59,39 @@ export const AppStyled = styled.div`
     .GlobalStyled_form-group_item:not(:last-child) { 
         margin-right: 10px;
     }
+    .GlobalStyled_link { 
+        text-transform: uppercase;
+        font-weight: 700;
+        color: black;
+        font-size: 14px;
+        border-bottom: 4px solid black;
+        text-decoration: none;
+    }
     .GlobalStyled_modal {
+        visibility: hidden;
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgb(0 0 0 / 20%);
+        background: rgb(0 0 0 / 0%);
+        transition: background 0.5s ease-out;
+        &.show{
+            visibility: visible;
+            background: rgb(0 0 0 / 20%);
+            > div {
+                top: 50%;
+            }
+        }
         > div {
             position: absolute;
-            top: 50%;
+            top: 0;
             transform: translate(-50%, -50%);
             max-width: calc(100% - 60px);
             width: 100%;
             left: 50%;
             box-shadow: 0px 4px 20px 5px rgb(0 0 0 / 29%), 0 19px 43px 0px rgb(0 0 0 / 15%);
+            transition: top 0.3s ease-out;
         }
         
     }

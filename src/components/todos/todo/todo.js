@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {TodoStyled} from "./todo_style";
 
-const Todo = ({children}) => {
+const Todo = ({setModalView, children}) => {
     const [opened, setOpened] = useState(false);
 
     const toggleOpen = () => {
@@ -18,7 +18,7 @@ const Todo = ({children}) => {
                     {children}
                 </div>
                 <footer>
-                    Edit
+                    <a href="#" onClick={() => setModalView('edit')} className="GlobalStyled_link">Edit</a>
                 </footer>
             </div>
         </TodoStyled>

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
+
 export const AppStyled = styled.div`
+    font-family: 'Saira', sans-serif;
     padding: 10px;
     position: relative;
     min-height: calc(100vh - 20px);

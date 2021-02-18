@@ -10,6 +10,7 @@ import {Item} from "./components/items/item";
 import {Separator} from "./components/UI/separator";
 import ItemNew from "./components/items/item/itemNew";
 import TodoNew from "./components/todos/todo/todoNew";
+import TodoEdit from "./components/todos/todo/todoEdit";
 
 Amplify.configure(awsconfig)
 
@@ -30,6 +31,7 @@ function App() {
             <Item/>
         </Todo>
         <TodoNew />
+        <TodoEdit />
         <button type="button" className="AppStyled_add-button">+</button>
 
     </AppStyled>

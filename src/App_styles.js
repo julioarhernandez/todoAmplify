@@ -49,4 +49,13 @@ export const AppStyled = styled.div`
         font-weight: 700;
         text-transform: uppercase;
     }
+    .GlobalStyled_form-group {
+        display: flex;
+        &:not(:last-child) {
+            margin-bottom: 15px;
+        }
+    }
+    .GlobalStyled_form-group_item:not(:last-child) { 
+        margin-right: 10px;
+    }
 `;

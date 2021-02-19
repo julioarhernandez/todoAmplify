@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {TodoStyled} from "./todo_style";
 
-const Todo = ({setModalView, children}) => {
+const TodoComponent = ({setModalView, children}) => {
     const [opened, setOpened] = useState(false);
 
     const toggleOpen = () => {
@@ -25,4 +25,4 @@ const Todo = ({setModalView, children}) => {
     );
 };
 
-export default Todo;
+export default TodoComponent;

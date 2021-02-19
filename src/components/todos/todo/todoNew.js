@@ -4,7 +4,8 @@ import {TodoNewStyled} from "./todo_new_style";
 const TodoNew = ({newTodoFn}) => {
     const [opened, setOpened] = useState(false);
 
-    const newTodo = () => {
+    const newTodo = (e) => {
+        e.preventDefault();
         newTodoFn();
     };
     return (
@@ -13,7 +14,7 @@ const TodoNew = ({newTodoFn}) => {
                 <h1>New Todo</h1>
             </div>
             <div className="TodoNewStyled_form">
-                <form onSubmit={() => newTodo()}>
+                <form onSubmit={newTodo}>
                     <div className="TodoNewStyled_form-group">
                         <input name="name" placeholder="Todo Name" className="GlobalStyled-input"/>
                     </div>

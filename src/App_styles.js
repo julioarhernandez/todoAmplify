@@ -26,6 +26,7 @@ export const AppStyled = styled.div`
         background-color: #e0e0e0;
         border: none;
         font-size: 30px;
+        font-weight: 900;
         outline: none;
         transition: all 0.3s ease-in;
         &:active {

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {TodoEditStyled} from "./todo_edit_style";
 
-const TodoEdit = ({newTodoFn}) => {
+const TodoEdit = ({newTodoFn, todoData}) => {
     const [opened, setOpened] = useState(false);
 
     const newTodo = () => {
@@ -15,6 +15,7 @@ const TodoEdit = ({newTodoFn}) => {
             <div className="TodoEditStyled_form">
                 <form onSubmit={() => newTodo()}>
                     <div className="TodoEditStyled_form-group">
+                        <input name="id" type="hidden"/>
                         <input name="name" placeholder="Todo Name" className="GlobalStyled-input"/>
                     </div>
                     <div className="TodoEditStyled_form-group">

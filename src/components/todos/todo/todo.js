@@ -7,6 +7,7 @@ const TodoComponent = ({
        setModalView,
        setTodoForEdit,
        inserItemHandler,
+        refreshTodos,
        todo
     }) => {
     const [opened, setOpened] = useState(false);
@@ -21,13 +22,15 @@ const TodoComponent = ({
         setModalView('edit');
     };
 
-    const insertTodoHandlers = () => {
+    const insertTodoHandlers = (e) => {
+        e.preventDefault();
         inserItemHandler({todoID: todo.id, itemName: formData.newItem});
         setModalView('');
+        refreshTodos();
     };
 
     useEffect(() => {
-        console.log(todo);
+        console.log('todo que', todo);
         //read items
     }, []);
 
@@ -38,7 +41,10 @@ const TodoComponent = ({
                 <h1>title</h1>
             </div>
             <div className="TodoStyled_content">
-                <form onSubmit={() => insertTodoHandlers()}>
+                <form onSubmit={(e) => insertTodoHandlers(e)}>
+                    {todo && todo.Items_todo.map((itm) => (
+                        <Item item={itm}/>
+                    ))}
                     <ItemNew onChange={setFormData}/>
                 </form>
                 <footer>

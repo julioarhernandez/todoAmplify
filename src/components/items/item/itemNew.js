@@ -8,6 +8,7 @@ const ItemNew = ({onChange}) => {
     const [localData, setLocalData] = useState('');
 
     const change = (e) => {
+        e.preventDefault();
         setLocalData({ ...localData, [e.target.name]: e.target.value});
         onChange(localData);
     };

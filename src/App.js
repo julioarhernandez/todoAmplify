@@ -59,6 +59,7 @@ function App() {
         }
 
         getData().then((data) => {
+            console.log(data);
             setTodos(data);
         })
 
@@ -67,7 +68,6 @@ function App() {
 
     const readActiveTodosItems = async () => {
         const models = await DataStore.query(Todo);
-        console.log(models);
         setTodos(models);
     };
 
@@ -91,25 +91,22 @@ function App() {
 
     const readItems = async () => {
         const models = await DataStore.query(Items);
-        console.log(models);
         // setTodos(models);
     };
 
     const readItemsByTodoId = async (model) => {
-        console.log('items from todoid:', model.id);
         const items = await DataStore.query(Items, c => c.todoID("eq", model.id));
         return Promise.resolve({ ...model, Items_todo: items});
     };
 
     return (
         <AppStyled>
-
             {todos && todos.map((todo, i) => (
                 <TodoComponent
                     setModalView={setModalView}
                     setTodoForEdit={setTodoForEdit}
                     todo={todo}
-                    items={readItems(todo.id)}
+                    refreshTodos={readTodos}
                     inserItemHandler={newItems}
                     key={`todos-${i}`} />
             ))}

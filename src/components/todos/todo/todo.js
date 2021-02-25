@@ -7,6 +7,7 @@ const TodoComponent = ({
        setModalView,
        setTodoForEdit,
        inserItemHandler,
+        updateItem,
         refreshTodos,
        todo
     }) => {
@@ -43,7 +44,7 @@ const TodoComponent = ({
             <div className="TodoStyled_content">
                 <form onSubmit={(e) => insertTodoHandlers(e)}>
                     {todo && todo.Items_todo.map((itm) => (
-                        <Item item={itm}/>
+                        <Item item={itm} updateItem={updateItem}/>
                     ))}
                     <ItemNew onChange={setFormData}/>
                 </form>

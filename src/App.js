@@ -94,6 +94,15 @@ function App() {
         // setTodos(models);
     };
 
+    async function updateItems(data) {
+        const original = await DataStore.query(Items, data.id);
+        await DataStore.save(
+            Items.copyOf(original, updated => {
+                updated.name = data.name;
+            })
+        );
+    }
+
     const readItemsByTodoId = async (model) => {
         const items = await DataStore.query(Items, c => c.todoID("eq", model.id));
         return Promise.resolve({ ...model, Items_todo: items});
@@ -106,6 +115,7 @@ function App() {
                     setModalView={setModalView}
                     setTodoForEdit={setTodoForEdit}
                     todo={todo}
+                    updateItem={updateItems}
                     refreshTodos={readTodos}
                     inserItemHandler={newItems}
                     key={`todos-${i}`} />

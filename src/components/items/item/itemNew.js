@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import EditableLabel from 'react-editable-label';
+import React, {useState, useEffect} from 'react';
 
 import {ItemNewStyled} from "./item_new_style";
 
@@ -9,9 +8,15 @@ const ItemNew = ({onChange}) => {
 
     const change = (e) => {
         e.preventDefault();
-        setLocalData({ ...localData, [e.target.name]: e.target.value});
-        onChange(localData);
+        if (e.target.value !== ''){
+            setLocalData({...localData, [e.target.name]: e.target.value});
+        }
     };
+
+    useEffect(() => {
+        onChange(localData);
+    }, [localData]);
+
 
     return (
         <ItemNewStyled>

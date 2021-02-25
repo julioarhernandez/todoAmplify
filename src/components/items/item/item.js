@@ -3,11 +3,18 @@ import EditableLabel from 'react-editable-label';
 
 import {ItemStyled} from "./item_style";
 
-const Item = ({item}) => {
+const Item = ({item, updateItem}) => {
 
     useEffect(() => {
         console.log('item here', item);
     }, []);
+
+    const updateItemValue = (value, item) => {
+        if (value) {
+            updateItem({name: value, id: item.id});
+        }
+
+    };
 
 
     return (
@@ -20,7 +27,7 @@ const Item = ({item}) => {
                     initialValue={item.name}
                     labelClass="ItemStyled_label"
                     save={value => {
-                        console.log(`Saving '${value}'`);
+                        updateItemValue(value, item);
                     }}
                 />
             </div>

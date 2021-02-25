@@ -3,7 +3,7 @@ import EditableLabel from 'react-editable-label';
 
 import {ItemStyled} from "./item_style";
 
-const Item = ({item, updateItem}) => {
+const Item = ({item, updateItem, deleteItem}) => {
 
     useEffect(() => {
         console.log('item here', item);
@@ -13,9 +13,7 @@ const Item = ({item, updateItem}) => {
         if (value) {
             updateItem({name: value, id: item.id});
         }
-
     };
-
 
     return (
         <ItemStyled>
@@ -30,6 +28,9 @@ const Item = ({item, updateItem}) => {
                         updateItemValue(value, item);
                     }}
                 />
+            </div>
+            <div className="ItemStyled_delete" onClick={() => deleteItem(item.id)}>
+                <span>x</span>
             </div>
 
         </ItemStyled>

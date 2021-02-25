@@ -103,6 +103,12 @@ function App() {
         );
     }
 
+    async function deleteItem(itemId) {
+        const modelToDelete = await DataStore.query(Items, itemId);
+        DataStore.delete(modelToDelete);
+        readTodos();
+    }
+
     const readItemsByTodoId = async (model) => {
         const items = await DataStore.query(Items, c => c.todoID("eq", model.id));
         return Promise.resolve({ ...model, Items_todo: items});
@@ -116,6 +122,7 @@ function App() {
                     setTodoForEdit={setTodoForEdit}
                     todo={todo}
                     updateItem={updateItems}
+                    deleteItem={deleteItem}
                     refreshTodos={readTodos}
                     inserItemHandler={newItems}
                     key={`todos-${i}`} />

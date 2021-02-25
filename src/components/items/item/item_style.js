@@ -11,22 +11,6 @@ export const ItemStyled = styled.div`
         width: 100%;
         > div {
             width: calc(100% - 20px);
-            &:after {
-                content: 'x';
-                display: block;
-                position: absolute;
-                top: calc(50% - 14px);
-                right: -10px;
-                width: 20px;
-                height: 20px;
-                background: crimson;
-                border-radius: 50%;
-                padding: 3px;
-                color: white;
-                text-align: center;
-                font-weight: 600;
-                font-family: sans-serif;
-            }
         }
         input {
            width: calc(100% - 20px);
@@ -48,6 +32,17 @@ export const ItemStyled = styled.div`
     }
     .ItemStyled_checkbox_icon {
         width: 20px;
+    }
+    .ItemStyled_delete {
+        display: block;
+        width: 22px;
+        height: 20px;
+        background: #d8d7d7b3;
+        border-radius: 50%;
+        color: #8d8d8d;
+        text-align: center;
+        font-family: sans-serif;
+        cursor: pointer;
     }
     .ItemStyled_label {
         // padding: 11px 0;

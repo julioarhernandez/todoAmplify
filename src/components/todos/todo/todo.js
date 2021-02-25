@@ -8,6 +8,7 @@ const TodoComponent = ({
        setTodoForEdit,
        inserItemHandler,
         updateItem,
+        deleteItem,
         refreshTodos,
        todo
     }) => {
@@ -44,7 +45,10 @@ const TodoComponent = ({
             <div className="TodoStyled_content">
                 <form onSubmit={(e) => insertTodoHandlers(e)}>
                     {todo && todo.Items_todo.map((itm) => (
-                        <Item item={itm} updateItem={updateItem}/>
+                        <Item
+                            item={itm}
+                            updateItem={updateItem}
+                            deleteItem={deleteItem}/>
                     ))}
                     <ItemNew onChange={setFormData}/>
                 </form>

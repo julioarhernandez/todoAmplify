@@ -1,11 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {TodoEditStyled} from "./todo_edit_style";
 
-const TodoEdit = ({newTodoFn, todoData}) => {
+const TodoEdit = ({editTodoFn, todoData}) => {
     const [opened, setOpened] = useState(false);
 
-    const newTodo = () => {
-        newTodoFn();
+    useEffect(() => {
+        console.log('todo data from edit' ,todoData);
+    }, []);
+
+
+    const editTodo = () => {
+        editTodoFn();
     };
     return (
         <TodoEditStyled open={opened}>
@@ -13,9 +18,9 @@ const TodoEdit = ({newTodoFn, todoData}) => {
                 <h1>Edit Todo</h1>
             </div>
             <div className="TodoEditStyled_form">
-                <form onSubmit={() => newTodo()}>
+                <form onSubmit={() => editTodo()}>
                     <div className="TodoEditStyled_form-group">
-                        <input name="id" type="hidden"/>
+                        <input name="id" type="hidden" value={todoData}/>
                         <input name="name" placeholder="Todo Name" className="GlobalStyled-input"/>
                     </div>
                     <div className="TodoEditStyled_form-group">

@@ -3,7 +3,14 @@ import EditableLabel from 'react-editable-label';
 
 import {ItemNewStyled} from "./item_new_style";
 
-const ItemNew = () => {
+const ItemNew = ({onChange}) => {
+
+    const [localData, setLocalData] = useState('');
+
+    const change = (e) => {
+        setLocalData({ ...localData, [e.target.name]: e.target.value});
+        onChange(localData);
+    };
 
     return (
         <ItemNewStyled>
@@ -11,7 +18,7 @@ const ItemNew = () => {
                 <input type="checkbox" name="check" className="GlobalStyled_checkbox"/>
             </div>
             <div className="ItemNewStyled_item">
-                <input type="text" name="newItem" />
+                <input type="text" name="newItem" onChange={(e) => change(e)}/>
             </div>
 
         </ItemNewStyled>

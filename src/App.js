@@ -2,10 +2,11 @@ import React, {useState, useEffect} from 'react';
 
 // Amplify
 import {DataStore} from '@aws-amplify/datastore';
-import {Todo} from './models';
+import {Todo, Items} from './models';
 
 //Styles
 import {AppStyled} from './App_styles';
+
 import {Item} from "./components/items/item";
 import {Separator} from "./components/UI/separator";
 import ItemNew from "./components/items/item/itemNew";
@@ -18,10 +19,16 @@ import {TodoComponent} from "./components/todos/todo";
 function App() {
 
     const [modalView, setModalView] = useState('');
-    const [todos, setTodos] = useState();
+    const [todos, setTodos] = useState([]);
+    // const [items, setItems] = useState([]);
+    const [todoForEdit, setTodoForEdit] = useState('');
 
     useEffect(() => {
-        readTodo();
+        // Get all todos
+        readTodos();
+        // get items for active todos only
+        // readActiveTodosItems();
+
     }, []);
 
 
@@ -37,11 +44,28 @@ function App() {
                 "Items_todo": []
             })
         ).then(() => {
-            readTodo();
+            readTodos();
         });
     };
 
-    const readTodo = async () => {
+    const readTodos = async () => {
+        let models = await DataStore.query(Todo);
+
+        // console.log(models);
+        const getData = async() => {
+            return Promise.all(models.map((model) => {
+                return readItemsByTodoId(model);
+            }));
+        }
+
+        getData().then((data) => {
+            setTodos(data);
+        })
+
+        // setTodos(models);
+    };
+
+    const readActiveTodosItems = async () => {
         const models = await DataStore.query(Todo);
         console.log(models);
         setTodos(models);
@@ -51,27 +75,53 @@ function App() {
 
     };
 
+    const newItems = async ({todoID, itemName}) => {
+        await DataStore.save(
+            new Items({
+                "name": itemName,
+                "status": "active",
+                "status_date_changed": "1970-01-01Z",
+                "todoID": todoID
+            })
+        ).then(() => {
+            console.log('inserted');
+            // readItems();
+        });
+    };
+
+    const readItems = async () => {
+        const models = await DataStore.query(Items);
+        console.log(models);
+        // setTodos(models);
+    };
+
+    const readItemsByTodoId = async (model) => {
+        console.log('items from todoid:', model.id);
+        const items = await DataStore.query(Items, c => c.todoID("eq", model.id));
+        return Promise.resolve({ ...model, Items_todo: items});
+    };
+
     return (
         <AppStyled>
-            <TodoComponent setModalView={setModalView}>
-                <Item/>
-                <Separator/>
-                <Item/>
-                <Separator/>
-                <Item/>
-                <Separator/>
-                <ItemNew/>
-            </TodoComponent>
-            <TodoComponent setModalView={setModalView}>
-                <Item/>
-            </TodoComponent>
+
+            {todos && todos.map((todo, i) => (
+                <TodoComponent
+                    setModalView={setModalView}
+                    setTodoForEdit={setTodoForEdit}
+                    todo={todo}
+                    items={readItems(todo.id)}
+                    inserItemHandler={newItems}
+                    key={`todos-${i}`} />
+            ))}
+
             <Modal classType={ modalView === 'new' && 'show'} setModalView={setModalView}>
                 <TodoNew
                     newTodoFn={newTodo}/>
             </Modal>
             <Modal classType={modalView === 'edit' && 'show'} setModalView={setModalView}>
                 <TodoEdit
-                    todoData={todos}/>
+                    todoData={todoForEdit}
+                    editTodoFn={updateTodo}/>
             </Modal>
             <button type="button" className="AppStyled_add-button" onClick={() => setModalView('new')}>+</button>
         </AppStyled>

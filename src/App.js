@@ -103,6 +103,16 @@ function App() {
         );
     }
 
+    async function updateItemsStatus(data) {
+        const original = await DataStore.query(Items, data.id);
+        await DataStore.save(
+            Items.copyOf(original, updated => {
+                updated.status = (original.status === 'active' ? 'done' : 'active');
+            })
+        ).then(()=> readTodos());
+
+    }
+
     async function deleteItem(itemId) {
         const modelToDelete = await DataStore.query(Items, itemId);
         DataStore.delete(modelToDelete);
@@ -124,6 +134,7 @@ function App() {
                     updateItem={updateItems}
                     deleteItem={deleteItem}
                     refreshTodos={readTodos}
+                    updatedStatus={updateItemsStatus}
                     inserItemHandler={newItems}
                     key={`todos-${i}`} />
             ))}

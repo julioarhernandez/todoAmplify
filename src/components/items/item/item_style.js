@@ -9,6 +9,9 @@ export const ItemStyled = styled.div`
         margin-right: 10px;
         display: flex;
         width: 100%;
+        &.done {
+            text-decoration: line-through;
+        }
         > div {
             width: calc(100% - 20px);
         }
@@ -21,9 +24,7 @@ export const ItemStyled = styled.div`
             border-radius: 3px;
             outline: none;
         }
-    }
-    .ItemStyled_item {
-        > small {
+         > small {
             padding: 0 10px;
         }
     }

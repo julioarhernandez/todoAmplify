@@ -8,6 +8,7 @@ const TodoComponent = ({
        setTodoForEdit,
        inserItemHandler,
         updateItem,
+       updatedStatus,
         deleteItem,
         refreshTodos,
        todo
@@ -47,6 +48,7 @@ const TodoComponent = ({
                     {todo && todo.Items_todo.map((itm) => (
                         <Item
                             item={itm}
+                            updatedStatus={updatedStatus}
                             updateItem={updateItem}
                             deleteItem={deleteItem}/>
                     ))}

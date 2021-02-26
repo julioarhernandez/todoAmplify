@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
 import EditableLabel from 'react-editable-label';
+import classNames from 'classnames';
 
 import {ItemStyled} from "./item_style";
 
-const Item = ({item, updateItem, deleteItem}) => {
+const Item = ({item, updateItem, updatedStatus, deleteItem}) => {
 
     useEffect(() => {
         console.log('item here', item);
@@ -15,12 +16,17 @@ const Item = ({item, updateItem, deleteItem}) => {
         }
     };
 
+    const updateItemStatus = (e) => {
+        e.preventDefault();
+        updatedStatus({id: e.target.value});
+    };
+
     return (
         <ItemStyled>
             <div className="ItemStyled_checkbox">
-                <input type="checkbox" name="check" className="GlobalStyled_checkbox" value={item.id}/>
+                <input type="checkbox" name="check" className="GlobalStyled_checkbox" value={item.id} checked={item.status === 'done'} onClick={(e) => updateItemStatus(e)}/>
             </div>
-            <div className="ItemStyled_item">
+            <div className={classNames('ItemStyled_item', {done: item.status === 'done'})}>
                 <EditableLabel
                     initialValue={item.name}
                     labelClass="ItemStyled_label"

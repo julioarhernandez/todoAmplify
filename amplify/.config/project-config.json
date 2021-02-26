@@ -1,10 +1,10 @@
 {
-  "projectName": "todo-items",
-  "version": "3.0",
-  "frontend": "javascript",
   "providers": [
     "awscloudformation"
   ],
+  "projectName": "todo",
+  "version": "3.0",
+  "frontend": "javascript",
   "javascript": {
     "framework": "react",
     "config": {

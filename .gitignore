@@ -35,8 +35,10 @@ dist/
 node_modules/
 aws-exports.js
 awsconfiguration.json
-amplifyconfiguration.json
-amplify-build-config.json
-amplify-gradle-config.json
-amplifytools.xcconfig
 .secret-*
+/.idea/.gitignore
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/todoAmp.iml
+/.idea/vcs.xml

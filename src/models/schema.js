@@ -138,6 +138,13 @@ export const schema = {
                         "connectionType": "HAS_MANY",
                         "associatedWith": "todoID"
                     }
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -168,5 +175,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "0d5b6f8220e00c4a052ee876732f12f6"
+    "version": "628f84dc144a0e5e8420fb7754ae3285"
 };

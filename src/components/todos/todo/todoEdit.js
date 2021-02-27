@@ -59,7 +59,7 @@ const TodoEdit = ({editTodoFn, todoData}) => {
                     </div>
                     <div className="GlobalStyled_form-group">
                         <div className="GlobalStyled_form-group_item">
-                            <button type="button" className="GlobalStyled-button" name="editTodo" onClick={() => editTodo('edit')}>Edit Todo</button>
+                            <button type="button" className="GlobalStyled-button" name="editTodo" onClick={() => editTodo('edit')}>Save Todo</button>
                         </div>
                         <div className="GlobalStyled_form-group_item">
                             <button type="button" className="GlobalStyled-button danger" name="deleteTodo" onClick={() => editTodo('delete')}>Delete Todo</button>

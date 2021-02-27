@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {TodoNewStyled} from "./todo_new_style";
+import classNames from 'classnames';
 
 const TodoNew = ({newTodoFn}) => {
     const [opened, setOpened] = useState(false);
-    const [formData, setFormData] = useState({name:'', frequency: 'once', freqNumber: '', startDate: ''});
+    const [formData, setFormData] = useState({name:'', frequency: 'Once', freqNumber: 0, startDate: ''});
+    const freqNum = useRef('');
 
     const newTodo = (e) => {
         e.preventDefault();
@@ -11,8 +13,14 @@ const TodoNew = ({newTodoFn}) => {
     };
 
     const dataChanged = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value});
-        console.log(formData);
+        let data = {...formData, [e.target.name]: e.target.value};
+        if ((e.target.name === 'frequency') && (e.target.value === 'Once')){
+            data.freqNumber = 0;
+        }
+        if ((e.target.name === 'frequency') && (e.target.value === 'Every')) {
+            data.freqNumber = freqNum.current.value;
+        }
+        setFormData(data);
     };
 
 
@@ -39,9 +47,9 @@ const TodoNew = ({newTodoFn}) => {
                                 </option>
                             </select>
                         </div>
-                        <div className="TodoNewStyled_form-group_item">
+                        <div className={classNames('TodoNewStyled_form-group_item', {hide: (formData.frequency === 'Once' || formData.freqNumber === 0)})}>
                             <input name="freqNumber" type="number" className="GlobalStyled-input" step="1"
-                                   onChange={dataChanged}/>
+                                   onChange={dataChanged} ref={freqNum}/>
                         </div>
                     </div>
                     <div className="TodoNewStyled_form-group">

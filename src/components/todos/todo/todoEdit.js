@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {TodoEditStyled} from "./todo_edit_style";
+import classNames from "classnames";
 
 const TodoEdit = ({editTodoFn, todoData}) => {
     const [opened, setOpened] = useState(false);
-    const [formData, setFormData] = useState({name: todoData.name, date: todoData.date, date_freq: todoData.date_freq});
+    const [formData, setFormData] = useState({name: todoData.name, date: todoData.date, date_freq: todoData.date_freq, frequency: todoData.date_freq ? "Every" : "Once" });
 
     useEffect(() => {
         console.log('todo data from edit' ,todoData, formData);
@@ -35,16 +36,17 @@ const TodoEdit = ({editTodoFn, todoData}) => {
                     </div>
                     <div className="TodoEditStyled_form-group">
                         <div className="TodoEditStyled_form-group_item">
-                            <select className="GlobalStyled-input">
-                                <option>
+                            <select className="GlobalStyled-input" name="frequency" onChange={changeData}
+                                    required="required">
+                                <option value="Once">
                                     Once
                                 </option>
-                                <option>
+                                <option value="Every">
                                     Every
                                 </option>
                             </select>
                         </div>
-                        <div className="TodoEditStyled_form-group_item">
+                            <div className={classNames('TodoEditStyled_form-group_item', {hide: formData.frequency === 'Once' || formData.date_freq === 0})}>
                             <input name="date_freq" type="number" className="GlobalStyled-input" step="1"
                                    value={formData.date_freq} onChange={changeData}/>
                         </div>

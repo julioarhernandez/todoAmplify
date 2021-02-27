@@ -33,6 +33,7 @@ function App() {
 
     const newTodo = ({name, frequency, freqNumber, startDate}) => {
         let startDateTemp = format(parseISO(startDate), "yyyy-MM-dd");
+        // console.log(name, startDateTemp, freqNumber);
         insertTodo({name, date: startDateTemp, date_freq: freqNumber});
     };
 

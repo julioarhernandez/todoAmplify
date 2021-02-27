@@ -10,6 +10,9 @@ export const AppStyled = styled.div`
         border: none;
         margin: 3px;
     }
+    .hide {
+        display: none;
+    }
     .AppStyled_add-button {
         position: absolute;
         bottom: 16px;

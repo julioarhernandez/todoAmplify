@@ -76,9 +76,32 @@ function App() {
         setTodos(models);
     };
 
-    const updateTodo = async () => {
-
+    const updateTodo = async (action, todoData) => {
+        if (action === 'edit'){
+            // updateTodoById(id, todoData);
+            console.log('edit', todoData);
+        }
+        if (action === 'delete') {
+            console.log('delete', todoData);
+            deleteTodo(todoData.id);
+            setModalView('');
+        }
     };
+
+    async function updateTodoById(data) {
+        const original = await DataStore.query(Todo, data.id);
+        await DataStore.save(
+            Todo.copyOf(original, updated => {
+                updated.name = data.name;
+            })
+        );
+    }
+
+    async function deleteTodo(itemId) {
+        const modelToDelete = await DataStore.query(Todo, itemId);
+        DataStore.delete(modelToDelete);
+        readTodos();
+    }
 
     const newItems = async ({todoID, itemName}) => {
         await DataStore.save(

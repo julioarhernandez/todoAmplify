@@ -20,8 +20,8 @@ const TodoComponent = ({
         setOpened(() => !opened);
     };
 
-    const editTodoHandlers = (todoId) => {
-        setTodoForEdit(todoId);
+    const editTodoHandlers = (todo) => {
+        setTodoForEdit(todo);
         setModalView('edit');
     };
 
@@ -56,7 +56,7 @@ const TodoComponent = ({
                     <ItemNew onChange={setFormData}/>
                 </form>
                 <footer>
-                    <a href="#" onClick={() => editTodoHandlers(todo.id)} className="GlobalStyled_link">Edit</a>
+                    <a href="#" onClick={() => editTodoHandlers(todo)} className="GlobalStyled_link">Edit</a>
                 </footer>
             </div>
         </TodoStyled>

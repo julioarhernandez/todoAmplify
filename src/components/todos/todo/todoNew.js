@@ -15,6 +15,8 @@ const TodoNew = ({newTodoFn}) => {
         console.log(formData);
     };
 
+
+
     return (
         <TodoNewStyled open={opened}>
             <div className="TodoNewStyled_header">
@@ -27,7 +29,8 @@ const TodoNew = ({newTodoFn}) => {
                     </div>
                     <div className="TodoNewStyled_form-group">
                         <div className="TodoNewStyled_form-group_item">
-                            <select className="GlobalStyled-input" name="frequency" onChange={dataChanged}>
+                            <select className="GlobalStyled-input" name="frequency" onChange={dataChanged}
+                                    required="required">
                                 <option>
                                     Once
                                 </option>
@@ -43,7 +46,7 @@ const TodoNew = ({newTodoFn}) => {
                     </div>
                     <div className="TodoNewStyled_form-group">
                         <div className="TodoNewStyled_form-group_item">
-                            <input name="startDate" type="date" className="GlobalStyled-input" onChange={dataChanged}/>
+                            <input name="startDate" type="date" className="GlobalStyled-input" onChange={dataChanged} required/>
                         </div>
                     </div>
                     <div className="TodoNewStyled_form-group">

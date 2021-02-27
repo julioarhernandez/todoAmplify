@@ -48,20 +48,19 @@ const TodoEdit = ({editTodoFn, todoData}) => {
                             <input name="date_freq" type="number" className="GlobalStyled-input" step="1"
                                    value={formData.date_freq} onChange={changeData}/>
                         </div>
-                        <div className="TodoEditStyled_form-group">
-                            <div className="TodoEditStyled_form-group_item">
-                                <input name="startDate" type="date" className="GlobalStyled-input" required
-                                       value={formData.date} onChange={changeData}/>
-                            </div>
+                    </div>
+                    <div className="TodoEditStyled_form-group">
+                        <div className="TodoEditStyled_form-group_item">
+                            <input name="date" type="date" className="GlobalStyled-input" required
+                                   value={formData.date} onChange={changeData}/>
                         </div>
-
                     </div>
                     <div className="GlobalStyled_form-group">
                         <div className="GlobalStyled_form-group_item">
                             <button type="button" className="GlobalStyled-button" name="editTodo" onClick={() => editTodo('edit')}>Edit Todo</button>
                         </div>
                         <div className="GlobalStyled_form-group_item">
-                            <button type="button" className="GlobalStyled-button" name="deleteTodo" onClick={() => editTodo('delete')}>Delete Todo</button>
+                            <button type="button" className="GlobalStyled-button danger" name="deleteTodo" onClick={() => editTodo('delete')}>Delete Todo</button>
                         </div>
                     </div>
                 </form>

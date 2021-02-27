@@ -52,6 +52,10 @@ export const AppStyled = styled.div`
         color: white;
         font-weight: 700;
         text-transform: uppercase;
+        cursor: pointer;
+        &.danger{
+            background: red;
+        }
     }
     .GlobalStyled_form-group {
         display: flex;

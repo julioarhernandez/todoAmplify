@@ -42,7 +42,7 @@ function App() {
                 "owner": "somebody",
                 "date": date,
                 "date_changed": null,
-                "date_freq": date_freq || 0,
+                "date_freq": parseInt(date_freq) || 0,
                 "shared": true,
                 "name": name,
                 "status": "active",
@@ -78,14 +78,17 @@ function App() {
 
     const updateTodo = async (action, todoData) => {
         if (action === 'edit'){
-            // updateTodoById(id, todoData);
             console.log('edit', todoData);
+            updateTodoById(todoData).then(() => {
+                readTodos();
+            });
+
         }
         if (action === 'delete') {
             console.log('delete', todoData);
             deleteTodo(todoData.id);
-            setModalView('');
         }
+        setModalView('');
     };
 
     async function updateTodoById(data) {
@@ -93,6 +96,8 @@ function App() {
         await DataStore.save(
             Todo.copyOf(original, updated => {
                 updated.name = data.name;
+                updated.date_freq = parseInt(data.date_freq);
+                updated.date = data.date;
             })
         );
     }

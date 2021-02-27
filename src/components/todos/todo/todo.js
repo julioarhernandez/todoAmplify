@@ -41,12 +41,13 @@ const TodoComponent = ({
         <TodoStyled open={opened}>
             <div className="TodoStyled_header"
                  onClick={() => toggleOpen()}>
-                <h1>title</h1>
+                <h1>{todo.name}</h1>
             </div>
             <div className="TodoStyled_content">
                 <form onSubmit={(e) => insertTodoHandlers(e)}>
-                    {todo && todo.Items_todo.map((itm) => (
+                    {todo && todo.Items_todo.map((itm,i) => (
                         <Item
+                            key={`item-${todo.id}-${i}`}
                             item={itm}
                             updatedStatus={updatedStatus}
                             updateItem={updateItem}

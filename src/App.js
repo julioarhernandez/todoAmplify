@@ -7,13 +7,12 @@ import {Todo, Items} from './models';
 //Styles
 import {AppStyled} from './App_styles';
 
-import {Item} from "./components/items/item";
-import {Separator} from "./components/UI/separator";
-import ItemNew from "./components/items/item/itemNew";
 import TodoNew from "./components/todos/todo/todoNew";
 import TodoEdit from "./components/todos/todo/todoEdit";
 import {Modal} from "./components/UI/modal";
 import {TodoComponent} from "./components/todos/todo";
+
+import {format, parseISO} from 'date-fns';
 
 
 function App() {
@@ -32,14 +31,20 @@ function App() {
     }, []);
 
 
-    const newTodo = async () => {
+    const newTodo = ({name, frequency, freqNumber, startDate}) => {
+        let startDateTemp = format(parseISO(startDate), "yyyy-MM-dd");
+        insertTodo({name, date: startDateTemp, date_freq: freqNumber});
+    };
+
+    const insertTodo = async ({date, date_freq, name}) => {
         await DataStore.save(
             new Todo({
-                "owner": "Lorem ipsum dolor sit amet",
-                "date": "1970-01-01Z",
-                "date_changed": "1970-01-01Z",
-                "date_freq": 1,
+                "owner": "somebody",
+                "date": date,
+                "date_changed": null,
+                "date_freq": date_freq || 0,
                 "shared": true,
+                "name": name,
                 "status": "active",
                 "Items_todo": []
             })

@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 // Amplify
 import {DataStore} from '@aws-amplify/datastore';
 import {Todo, Items} from './models';
+import classNames from 'classnames';
 
 //Styles
 import {AppStyled} from './App_styles';
@@ -55,22 +56,45 @@ function App() {
         });
     };
 
+    const readItemsByTodoId = async (model) => {
+        const items = await DataStore.query(Items, c => c.todoID("eq", model.id));
+        return Promise.resolve({...model, Items_todo: items});
+    };
+
     const readTodos = async () => {
         let models = await DataStore.query(Todo);
 
-        // console.log(models);
+        console.log('reading todos', models);
         const getData = async() => {
             return Promise.all(models.map((model) => {
                 return readItemsByTodoId(model);
             }));
-        }
+        };
 
         getData().then((data) => {
             console.log(data);
-            setTodos(data);
-        })
+            // check if any item is active to update the todos status when all are done
+            let todoStatusChanged = false;
+            data.map( (d) => {
+                // If no item within todos is active and the todo is still active
+                //  update todo with status done and date changed to today
+                if (d.status === 'active' && !(d.Items_todo.some(i => i.status === 'active'))) {
+                    todoStatusChanged = true;
+                    updateTodoStatus({todoID: d.id, date_changed: "2021-02-27", status: "done"});
+                }
+                if (d.status === 'done' && d.Items_todo.some(i => i.status === 'active')) {
+                    todoStatusChanged = true;
+                    updateTodoStatus({todoID: d.id, date_changed: "2021-02-27", status: "active"});
+                }
+            });
+            if (todoStatusChanged){
+                console.log('sed to read todo again');
+                readTodos();
+            }else {
+                setTodos(data);
+            }
+        });
 
-        // setTodos(models);
     };
 
     const readActiveTodosItems = async () => {
@@ -104,6 +128,16 @@ function App() {
         );
     }
 
+    async function updateTodoStatus({todoID, date_changed, status}) {
+        const original = await DataStore.query(Todo, todoID);
+        await DataStore.save(
+            Todo.copyOf(original, updated => {
+                updated.date_changed = date_changed;
+                updated.status = status;
+            })
+        );
+    }
+
     async function deleteTodo(itemId) {
         const modelToDelete = await DataStore.query(Todo, itemId);
         DataStore.delete(modelToDelete);
@@ -124,11 +158,6 @@ function App() {
         });
     };
 
-    const readItems = async () => {
-        const models = await DataStore.query(Items);
-        // setTodos(models);
-    };
-
     async function updateItems(data) {
         const original = await DataStore.query(Items, data.id);
         await DataStore.save(
@@ -144,7 +173,9 @@ function App() {
             Items.copyOf(original, updated => {
                 updated.status = (original.status === 'active' ? 'done' : 'active');
             })
-        ).then(()=> readTodos());
+        ).then(()=> {
+            readTodos();
+        });
 
     }
 
@@ -153,11 +184,6 @@ function App() {
         DataStore.delete(modelToDelete);
         readTodos();
     }
-
-    const readItemsByTodoId = async (model) => {
-        const items = await DataStore.query(Items, c => c.todoID("eq", model.id));
-        return Promise.resolve({ ...model, Items_todo: items});
-    };
 
     return (
         <AppStyled>

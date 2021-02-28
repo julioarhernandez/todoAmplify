@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import classNames from 'classnames';
 import {TodoStyled} from "./todo_style";
 import {Item} from "../../items/item";
 import ItemNew from "../../items/item/itemNew";
@@ -41,7 +42,7 @@ const TodoComponent = ({
         <TodoStyled open={opened}>
             <div className="TodoStyled_header"
                  onClick={() => toggleOpen()}>
-                <h1>{todo.name}</h1>
+                <h1 className={classNames({done: todo.status !== 'active' })}>{todo.name}</h1>
             </div>
             <div className="TodoStyled_content">
                 <form onSubmit={(e) => insertTodoHandlers(e)}>

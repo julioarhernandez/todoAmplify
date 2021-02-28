@@ -13,6 +13,9 @@ export const AppStyled = styled.div`
     .hide {
         display: none;
     }
+    .done {
+        text-decoration: line-through;
+    }
     .AppStyled_add-button {
         position: absolute;
         bottom: 16px;

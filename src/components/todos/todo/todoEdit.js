@@ -4,20 +4,15 @@ import classNames from "classnames";
 
 const TodoEdit = ({editTodoFn, todoData}) => {
     const [opened, setOpened] = useState(false);
-    const [formData, setFormData] = useState({name: todoData.name, date: todoData.date, date_freq: todoData.date_freq, frequency: todoData.date_freq ? "Every" : "Once" });
+    const [formData, setFormData] = useState({name: todoData.name, date: todoData.date, date_freq: todoData.date_freq });
 
     useEffect(() => {
-        console.log('todo data from edit' ,todoData, formData);
-    }, []);
-
-    useEffect(() => {
-        setFormData(todoData);
+        setFormData({...todoData, frequency: (todoData.date_freq !== 0) ? "Every" : "Once"});
     }, [todoData]);
 
 
     const changeData = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
-        console.log(formData);
     };
 
     const editTodo = (action) => {
@@ -37,7 +32,7 @@ const TodoEdit = ({editTodoFn, todoData}) => {
                     <div className="TodoEditStyled_form-group">
                         <div className="TodoEditStyled_form-group_item">
                             <select className="GlobalStyled-input" name="frequency" onChange={changeData}
-                                    required="required">
+                                    required="required" value={formData.frequency || (formData.date_freq ? "Every" : "Once")}>
                                 <option value="Once">
                                     Once
                                 </option>
@@ -46,7 +41,7 @@ const TodoEdit = ({editTodoFn, todoData}) => {
                                 </option>
                             </select>
                         </div>
-                            <div className={classNames('TodoEditStyled_form-group_item', {hide: formData.frequency === 'Once' || formData.date_freq === 0})}>
+                            <div className={classNames('TodoEditStyled_form-group_item', {hide: formData.frequency === 'Once'})}>
                             <input name="date_freq" type="number" className="GlobalStyled-input" step="1"
                                    value={formData.date_freq} onChange={changeData}/>
                         </div>

@@ -51,6 +51,7 @@ function App() {
             })
         ).then(() => {
             readTodos();
+            setModalView('');
         });
     };
 

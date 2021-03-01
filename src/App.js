@@ -66,7 +66,7 @@ function App() {
         if (d.status === 'active' && d.Items_todo.every(i => i.status === 'done')) {
             updated = true;
             // console.log('active to done ');
-            return updateTodoStatus({todoID: d.id, date_changed: "2021-02-27", status: "done"}).then(()=> {
+            return updateTodoStatus({todoID: d.id, date_changed: format(new Date(), "yyyy-MM-dd"), status: "done"}).then(()=> {
                 // console.log('finished upating todo from active to done');
                 return Promise.resolve("reload");
             });
@@ -75,7 +75,8 @@ function App() {
         if (d.status === 'done' && d.Items_todo.some(i => i.status === 'active')) {
             updated = true;
             // console.log('done to active ');
-            return updateTodoStatus({todoID: d.id, date_changed: "2021-02-27", status: "active"}).then(() => {
+
+            return updateTodoStatus({todoID: d.id, date_changed: format(new Date(), "yyyy-MM-dd"), status: "active"}).then(() => {
                 // console.log('finished upating todo from done to active');
                 return Promise.resolve("reload");
             });

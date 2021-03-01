@@ -34,14 +34,25 @@ function App() {
 
     }, []);
 
+    const setNextDate = () => {
+
+    }
+
+    const nextDate = (date, sum) => {
+        return format(add(parseISO(date), {days: sum}), "yyyy-MM-dd")
+    };
+
+    const today = () => {
+        return format(new Date(), "yyyy-MM-dd");
+    };
 
     const newTodo = ({name, frequency, freqNumber, startDate}) => {
         let startDateTemp = format(parseISO(startDate), "yyyy-MM-dd");
         // console.log(name, startDateTemp, freqNumber);
         // add date_freq to date
-        let nextDate = format(add(parseISO(startDateTemp), {days: freqNumber}), "yyyy-MM-dd");
+        // let nextDate = format(add(parseISO(startDateTemp), {days: freqNumber}), "yyyy-MM-dd");
         // console.log(nextDate);
-        insertTodo({name, date: nextDate, date_freq: freqNumber});
+        insertTodo({name, date: startDateTemp, date_freq: freqNumber});
     };
 
     const insertTodo = async ({date, date_freq, name}) => {
@@ -119,38 +130,33 @@ function App() {
         });
     };
 
-
-
-    const readActiveTodosItems = async () => {
-        const models = await DataStore.query(Todo);
-        setTodos(models);
-    };
+    async function updateTodoById(data) {
+        const original = await DataStore.query(Todo, data.id);
+        const {frequency, date, date_freq, name} = data;
+        let freq = (frequency === "Every") ? date_freq : 0 ;
+        await DataStore.save(
+            Todo.copyOf(original, updated => {
+                updated.name = name;
+                updated.date_freq = parseInt(freq);
+                updated.date = date;
+            })
+        );
+    }
 
     const updateTodo = async (action, todoData) => {
-        if (action === 'edit'){
-            console.log('edit', todoData);
+        if (action === 'edit') {
+            // console.log('edit', todoData);
             updateTodoById(todoData).then(() => {
                 readTodos();
             });
 
         }
         if (action === 'delete') {
-            console.log('delete', todoData);
+            // console.log('delete', todoData);
             deleteTodo(todoData.id);
         }
         setModalView('');
     };
-
-    async function updateTodoById(data) {
-        const original = await DataStore.query(Todo, data.id);
-        await DataStore.save(
-            Todo.copyOf(original, updated => {
-                updated.name = data.name;
-                updated.date_freq = parseInt(data.date_freq);
-                updated.date = data.date;
-            })
-        );
-    }
 
     async function updateTodoStatus({todoID, date_changed, status}) {
         const original = await DataStore.query(Todo, todoID);

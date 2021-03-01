@@ -38,7 +38,10 @@ function App() {
     const newTodo = ({name, frequency, freqNumber, startDate}) => {
         let startDateTemp = format(parseISO(startDate), "yyyy-MM-dd");
         // console.log(name, startDateTemp, freqNumber);
-        insertTodo({name, date: startDateTemp, date_freq: freqNumber});
+        // add date_freq to date
+        let nextDate = format(add(parseISO(startDateTemp), {days: freqNumber}), "yyyy-MM-dd");
+        // console.log(nextDate);
+        insertTodo({name, date: nextDate, date_freq: freqNumber});
     };
 
     const insertTodo = async ({date, date_freq, name}) => {

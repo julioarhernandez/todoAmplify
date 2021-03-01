@@ -13,7 +13,7 @@ import TodoEdit from "./components/todos/todo/todoEdit";
 import {Modal} from "./components/UI/modal";
 import {TodoComponent} from "./components/todos/todo";
 
-import {format, parseISO} from 'date-fns';
+import {format, parseISO, add, differenceInDays} from 'date-fns';
 
 
 function App() {
@@ -28,6 +28,9 @@ function App() {
         readTodos();
         // get items for active todos only
         // readActiveTodosItems();
+        // console.log(format(add(parseISO("2021-02-26"), {days: 7}), "LLL/dd"));
+        // console.log(format(new Date(), "yyyy-MM-dd"));
+        // console.log('diff', differenceInDays(parseISO("2021-03-04"), parseISO(format(new Date(), "yyyy-MM-dd"))));
 
     }, []);
 
@@ -65,19 +68,14 @@ function App() {
         let updated = false;
         if (d.status === 'active' && d.Items_todo.every(i => i.status === 'done')) {
             updated = true;
-            // console.log('active to done ');
             return updateTodoStatus({todoID: d.id, date_changed: format(new Date(), "yyyy-MM-dd"), status: "done"}).then(()=> {
-                // console.log('finished upating todo from active to done');
                 return Promise.resolve("reload");
             });
             // Search local data and set todo status too
         }
         if (d.status === 'done' && d.Items_todo.some(i => i.status === 'active')) {
             updated = true;
-            // console.log('done to active ');
-
             return updateTodoStatus({todoID: d.id, date_changed: format(new Date(), "yyyy-MM-dd"), status: "active"}).then(() => {
-                // console.log('finished upating todo from done to active');
                 return Promise.resolve("reload");
             });
             // Search local data and set todo status too

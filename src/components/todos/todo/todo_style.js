@@ -21,6 +21,12 @@ export const TodoStyled = styled.div`
             margin: 0;
             text-transform: capitalize;  
         }
+        &-date {
+            font-size: 14px;
+            img {
+                width: 12px;
+            }
+        }
     }
     footer{
         margin-top: 20px;

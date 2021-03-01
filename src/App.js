@@ -61,6 +61,37 @@ function App() {
         return Promise.resolve({...model, Items_todo: items});
     };
 
+    const setTodoStatusForItems = async (d) => {
+        let updated = false;
+        if (d.status === 'active' && d.Items_todo.every(i => i.status === 'done')) {
+            updated = true;
+            // console.log('active to done ');
+            return updateTodoStatus({todoID: d.id, date_changed: "2021-02-27", status: "done"}).then(()=> {
+                // console.log('finished upating todo from active to done');
+                return Promise.resolve("reload");
+            });
+            // Search local data and set todo status too
+        }
+        if (d.status === 'done' && d.Items_todo.some(i => i.status === 'active')) {
+            updated = true;
+            // console.log('done to active ');
+            return updateTodoStatus({todoID: d.id, date_changed: "2021-02-27", status: "active"}).then(() => {
+                // console.log('finished upating todo from done to active');
+                return Promise.resolve("reload");
+            });
+            // Search local data and set todo status too
+        }
+        if (!updated){
+            return Promise.resolve("set");
+        }
+    };
+
+    const changeTodoStatusWhenItemsChanged = async (data) => {
+        return Promise.all(data.map((d) => {
+            return setTodoStatusForItems(d);
+        }));
+    };
+
     const readTodos = async () => {
         let models = await DataStore.query(Todo);
 
@@ -72,30 +103,21 @@ function App() {
         };
 
         getData().then((data) => {
-            console.log(data);
-            // check if any item is active to update the todos status when all are done
-            let todoStatusChanged = false;
-            data.map( (d) => {
-                // If no item within todos is active and the todo is still active
-                //  update todo with status done and date changed to today
-                if (d.status === 'active' && !(d.Items_todo.some(i => i.status === 'active'))) {
-                    todoStatusChanged = true;
-                    updateTodoStatus({todoID: d.id, date_changed: "2021-02-27", status: "done"});
-                }
-                if (d.status === 'done' && d.Items_todo.some(i => i.status === 'active')) {
-                    todoStatusChanged = true;
-                    updateTodoStatus({todoID: d.id, date_changed: "2021-02-27", status: "active"});
-                }
-            });
-            if (todoStatusChanged){
-                console.log('sed to read todo again');
-                readTodos();
-            }else {
-                setTodos(data);
-            }
+            changeTodoStatusWhenItemsChanged(data).then((d) => {
+                // if return a set in all responses it means that no changes were made to todo status
+                // if return a reload in any of its responses means that we need to readTodo again to
+                // refresh local state fot todos
+                    console.log(d);
+                    if (d.includes('reload')) {
+                        readTodos();
+                    } else {
+                        setTodos(data);
+                    }
+                });
         });
-
     };
+
+
 
     const readActiveTodosItems = async () => {
         const models = await DataStore.query(Todo);

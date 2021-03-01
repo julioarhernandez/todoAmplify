@@ -6,10 +6,6 @@ import {ItemStyled} from "./item_style";
 
 const Item = ({item, updateItem, updatedStatus, deleteItem}) => {
 
-    useEffect(() => {
-        console.log('item here', item);
-    }, []);
-
     const updateItemValue = (value, item) => {
         if (value) {
             updateItem({name: value, id: item.id});

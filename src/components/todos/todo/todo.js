@@ -33,11 +33,6 @@ const TodoComponent = ({
         refreshTodos();
     };
 
-    useEffect(() => {
-        console.log('todo que', todo);
-        //read items
-    }, []);
-
     return (
         <TodoStyled open={opened}>
             <div className="TodoStyled_header"

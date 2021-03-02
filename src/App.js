@@ -78,6 +78,32 @@ function App() {
         return Promise.resolve({...model, Items_todo: items});
     };
 
+    const setNewDate = ({date, freq}) => {
+        const diffDays = differenceInDays(parseISO(today()), parseISO(date));
+        const freqChunks = Math.floor(diffDays / freq);
+        const addDays = (freqChunks + 1) * freq;
+        console.log(`New date passed date: ${parseISO(date)} today: ${parseISO(today())}, diff: ${diffDays}, freqChunks: ${freqChunks}, addDays: ${addDays}` );
+        return format(add(parseISO(date), {days: addDays}), "yyyy-MM-dd");
+    };
+
+    const setTodoDateEnd = async (d) => {
+        let updated = false;
+        if (d.date <= today() && d.date_freq) {
+            updated = true;
+            const newDate = setNewDate({date: d.date, freq: d.date_freq});
+            console.log('updating todo date changed');
+            return updateTodoDate({
+                todoID: d.id,
+                date: newDate
+            }).then(() => {
+                return Promise.resolve("reload");
+            });
+        }
+        if (!updated) {
+            return Promise.resolve("set");
+        }
+    };
+
     const setTodoStatusForItems = async (d) => {
         let updated = false;
         if (d.status === 'active' && d.Items_todo.every(i => i.status === 'done')) {
@@ -106,29 +132,51 @@ function App() {
     };
 
     const readTodos = async () => {
+        console.log('reading-todos -> function');
         let models = await DataStore.query(Todo);
 
-        console.log('reading todos', models);
-        const getData = async() => {
+        console.log('reading-todos -> check if needs to change date_changed');
+        const checkData = async () => {
             return Promise.all(models.map((model) => {
-                return readItemsByTodoId(model);
+                return setTodoDateEnd(model);
             }));
         };
 
-        getData().then((data) => {
-            changeTodoStatusWhenItemsChanged(data).then((d) => {
-                // if return a set in all responses it means that no changes were made to todo status
-                // if return a reload in any of its responses means that we need to readTodo again to
-                // refresh local state fot todos
-                    console.log(d);
-                    if (d.includes('reload')) {
-                        readTodos();
-                    } else {
-                        setTodos(data);
-                    }
+        checkData().then((data) => {
+            console.log('data after updated', data);
+            if (data.includes('reload')) {
+                console.log("reload again");
+                readTodos();
+            }else {
+                console.log('reading-todos -> making api reading request')
+                const getData = async () => {
+                    return Promise.all(models.map((model) => {
+                        return readItemsByTodoId(model);
+                    }));
+                };
+
+                getData().then((data) => {
+                    changeTodoStatusWhenItemsChanged(data).then((d) => {
+                        // if return a set in all responses it means that no changes were made to todo status
+                        // if return a reload in any of its responses means that we need to readTodo again to
+                        // refresh local state fot todos
+                        console.log(d);
+                        if (d.includes('reload')) {
+                            readTodos();
+                        } else {
+                            setTodos(data);
+                        }
+                    });
                 });
+            }
         });
+
+
     };
+
+    const cronTodoDate = () => {
+
+    }
 
     async function updateTodoById(data) {
         const original = await DataStore.query(Todo, data.id);
@@ -164,6 +212,15 @@ function App() {
             Todo.copyOf(original, updated => {
                 updated.date_changed = date_changed;
                 updated.status = status;
+            })
+        );
+    }
+
+    async function updateTodoDate({todoID, date}) {
+        const original = await DataStore.query(Todo, todoID);
+        await DataStore.save(
+            Todo.copyOf(original, updated => {
+                updated.date = date;
             })
         );
     }

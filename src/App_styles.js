@@ -17,7 +17,7 @@ export const AppStyled = styled.div`
         text-decoration: line-through;
     }
     .AppStyled_add-button {
-        position: absolute;
+        position: fixed;
         bottom: 16px;
         right: 16px;
         color: rgba(0, 0, 0, 0.87);

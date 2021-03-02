@@ -13,6 +13,10 @@ export const TodoStyled = styled.div`
             display: none;
         }
     `}
+    ${props => props.done && css`
+        border: 1px solid rgba(0,0,0,0.3);
+        opacity: 0.4;
+    `}
     .TodoStyled_content {
         padding-top: 15px;
     }

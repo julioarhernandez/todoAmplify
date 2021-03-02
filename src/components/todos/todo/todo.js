@@ -43,7 +43,7 @@ const TodoComponent = ({
     };
 
     return (
-        <TodoStyled open={opened}>
+        <TodoStyled open={opened} done={todo.status === 'done'}>
             <div className="TodoStyled_header"
                  onClick={() => toggleOpen()}>
                 <h1 className={classNames({done: todo.status !== 'active' })}>{todo.name}</h1>

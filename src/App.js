@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
 // Amplify
-import {DataStore} from '@aws-amplify/datastore';
+import {DataStore, Predicates, SortDirection} from '@aws-amplify/datastore';
 import {Todo, Items} from './models';
 import classNames from 'classnames';
 
@@ -26,21 +26,7 @@ function App() {
     useEffect(() => {
         // Get all todos
         readTodos();
-        // get items for active todos only
-        // readActiveTodosItems();
-        // console.log(format(add(parseISO("2021-02-26"), {days: 7}), "LLL/dd"));
-        // console.log(format(new Date(), "yyyy-MM-dd"));
-        // console.log('diff', differenceInDays(parseISO("2021-03-04"), parseISO(format(new Date(), "yyyy-MM-dd"))));
-
     }, []);
-
-    const setNextDate = () => {
-
-    }
-
-    const nextDate = (date, sum) => {
-        return format(add(parseISO(date), {days: sum}), "yyyy-MM-dd")
-    };
 
     const today = () => {
         return format(new Date(), "yyyy-MM-dd");
@@ -48,10 +34,6 @@ function App() {
 
     const newTodo = ({name, frequency, freqNumber, startDate}) => {
         let startDateTemp = format(parseISO(startDate), "yyyy-MM-dd");
-        // console.log(name, startDateTemp, freqNumber);
-        // add date_freq to date
-        // let nextDate = format(add(parseISO(startDateTemp), {days: freqNumber}), "yyyy-MM-dd");
-        // console.log(nextDate);
         insertTodo({name, date: startDateTemp, date_freq: freqNumber});
     };
 
@@ -133,7 +115,12 @@ function App() {
 
     const readTodos = async () => {
         console.log('reading-todos -> function');
-        let models = await DataStore.query(Todo);
+        //Sort by status and by date (closer dates first)
+        let models = await DataStore.query(Todo, Predicates.ALL, {
+            sort: s => s.status(SortDirection.ASCENDING).date(SortDirection.ASCENDING)
+        });
+
+        console.log(models);
 
         console.log('reading-todos -> check if needs to change date_changed');
         const checkData = async () => {
@@ -143,11 +130,10 @@ function App() {
         };
 
         checkData().then((data) => {
-            console.log('data after updated', data);
             if (data.includes('reload')) {
                 console.log("reload again");
                 readTodos();
-            }else {
+            } else {
                 console.log('reading-todos -> making api reading request')
                 const getData = async () => {
                     return Promise.all(models.map((model) => {
@@ -160,7 +146,6 @@ function App() {
                         // if return a set in all responses it means that no changes were made to todo status
                         // if return a reload in any of its responses means that we need to readTodo again to
                         // refresh local state fot todos
-                        console.log(d);
                         if (d.includes('reload')) {
                             readTodos();
                         } else {
@@ -170,13 +155,7 @@ function App() {
                 });
             }
         });
-
-
     };
-
-    const cronTodoDate = () => {
-
-    }
 
     async function updateTodoById(data) {
         const original = await DataStore.query(Todo, data.id);
@@ -193,14 +172,12 @@ function App() {
 
     const updateTodo = async (action, todoData) => {
         if (action === 'edit') {
-            // console.log('edit', todoData);
             updateTodoById(todoData).then(() => {
                 readTodos();
             });
 
         }
         if (action === 'delete') {
-            // console.log('delete', todoData);
             deleteTodo(todoData.id);
         }
         setModalView('');

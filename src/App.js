@@ -70,7 +70,9 @@ function App() {
 
     const setTodoDateEnd = async (d) => {
         let updated = false;
-        if (d.date <= today() && d.date_freq) {
+        // check if todo date is less than today and is not done to update
+        // next date to show it again
+        if (d.date <= today() && d.date_freq && d.status === 'done') {
             updated = true;
             const newDate = setNewDate({date: d.date, freq: d.date_freq});
             console.log('updating todo date changed');

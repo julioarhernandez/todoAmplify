@@ -5,6 +5,7 @@ export const AppStyled = styled.div`
     font-family: 'Saira', sans-serif;
     padding: 10px;
     position: relative;
+    margin-bottom: 55px;
     min-height: calc(100vh - 20px);
     hr{
         border: none;

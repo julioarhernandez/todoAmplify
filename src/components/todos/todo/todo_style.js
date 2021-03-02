@@ -17,6 +17,9 @@ export const TodoStyled = styled.div`
         border: 1px solid rgba(0,0,0,0.3);
         opacity: 0.4;
     `}
+    ${props => props.overdue && css`
+        background-color: rgba(255,0,0, 0.25);
+    `}
     .TodoStyled_content {
         padding-top: 15px;
     }

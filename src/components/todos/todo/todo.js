@@ -35,20 +35,43 @@ const TodoComponent = ({
         refreshTodos();
     };
 
-    const nextDate = ({date, date_freq: sum}) => {
+    const differenceBetweenTodayAndDate = (date) => {
+        return differenceInDays(parseISO(date), parseISO(format(new Date(), "yyyy-MM-dd")));
+    };
+
+    const daySuffix = (day) => {
+          return ((day > 1) ? ' days' : ' day');
+    };
+
+    const nextDate = ({date, date_freq}) => {
         // console.log(parseISO(format(new Date(), "yyyy-MM-dd")));
-        let days = differenceInDays(parseISO(date), parseISO(format(new Date(), "yyyy-MM-dd")));
-        days += (days > 1) ? ' days' : ' day';
+        let days = differenceBetweenTodayAndDate(date);
+        if (days > 0) {
+            days = '- Next on ' + days + daySuffix(days);
+        }else{
+            let overdueDays = overdueAmount(days, date_freq);
+            days = '- Overdue (' + overdueDays + ')';
+        }
         return days;
     };
 
+    const overdue = ({date}) => {
+        // if todos date is greater than today it means the todo is overdue
+        return (differenceBetweenTodayAndDate(date) < 0);
+    };
+
+    const overdueAmount = (days, freq) => {
+        const difference = Math.abs(days + freq);
+        return ((difference == 0) ? "Today" : `${difference} ${daySuffix(difference)}`);
+    };
+
     return (
-        <TodoStyled open={opened} done={todo.status === 'done'}>
+        <TodoStyled open={opened} done={todo.status === 'done'} overdue={overdue(todo)}>
             <div className="TodoStyled_header"
                  onClick={() => toggleOpen()}>
                 <h1 className={classNames({done: todo.status !== 'active' })}>{todo.name}</h1>
                 <div className="TodoStyled_header-date">
-                    <span><img src={dateIcon} /> </span> <span>{todo.date_freq ? `Every ${todo.date_freq} days` : "Once"}</span>{todo.date_freq > 0 && <span> - Next on {nextDate(todo)}</span>}
+                    <span><img src={dateIcon} /> </span> <span>{todo.date_freq ? `Every ${todo.date_freq} days` : "Once"}</span>{todo.date_freq > 0 && <span> {nextDate(todo)}</span>}
 
                 </div>
             </div>

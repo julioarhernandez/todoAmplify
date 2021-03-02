@@ -8,11 +8,6 @@ export const TodoStyled = styled.div`
     &:not(:last-child){
         margin-bottom: 20px;
     }
-    ${props => !(props.open) && css`
-        .TodoStyled_content {
-            display: none;
-        }
-    `}
     ${props => props.done && css`
         border: 1px solid rgba(0,0,0,0.3);
         opacity: 0.4;

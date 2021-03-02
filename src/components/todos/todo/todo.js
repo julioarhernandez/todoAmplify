@@ -66,7 +66,7 @@ const TodoComponent = ({
     };
 
     return (
-        <TodoStyled open={opened} done={todo.status === 'done'} overdue={overdue(todo)}>
+        <TodoStyled done={todo.status === 'done'} overdue={overdue(todo)}>
             <div className="TodoStyled_header"
                  onClick={() => toggleOpen()}>
                 <h1 className={classNames({done: todo.status !== 'active' })}>{todo.name}</h1>
@@ -75,7 +75,7 @@ const TodoComponent = ({
 
                 </div>
             </div>
-            <div className="TodoStyled_content">
+            <div className={classNames("TodoStyled_content GlobalStyled_collapse", {show: opened})}>
                 <form onSubmit={(e) => insertTodoHandlers(e)}>
                     {todo && todo.Items_todo.map((itm,i) => (
                         <Item

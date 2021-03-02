@@ -139,6 +139,15 @@ export const AppStyled = styled.div`
             box-shadow: 0px 4px 20px 5px rgb(0 0 0 / 29%), 0 19px 43px 0px rgb(0 0 0 / 15%);
             transition: top 0.3s ease-out;
         }
-        
+    }
+    .GlobalStyled_collapse {
+          display: block;
+          max-height: 0px;
+          overflow: hidden;
+          transition: max-height .5s cubic-bezier(0, 1, 0, 1);; 
+          &.show {
+            max-height: 99em;
+            transition: max-height .5s ease-in-out;
+          }
     }
 `;

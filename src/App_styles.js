@@ -82,9 +82,9 @@ export const AppStyled = styled.div`
         text-decoration: none;
     }
     .GlobalStyled_checkbox {
-        position: relative;
-        &:before,
-        &:after {
+          position: relative;
+          &:before,
+          &:after {
             content: '';
             width: 20px;
             height: 20px;
@@ -93,25 +93,28 @@ export const AppStyled = styled.div`
             top: -4px;
             border-radius: 4px;
             background-color: #8d8d8d;
-        }
-        &:checked { 
+            transition: background-color 0.2s ease-out;
+          }
+          &:checked { 
             &:before {
-                background-color: black;
+              background-color: black;
             }
             &:after {
-                display: inline-block;
-                transform: rotate(45deg);
-                height: 11px;
-                width: 5px;
-                border-bottom: 3px solid #ffffff;
-                border-right: 3px solid #ffffff;
-                background-color: transparent;
-                position: absolute;
-                left: 6px;
-                border-radius: 0;
-                top: -3px;
+              display: inline-block;
+              height: 11px;
+              width: 5px;
+              border-bottom: 3px solid #ffffff;
+              border-right: 3px solid #ffffff;
+              background-color: transparent;
+              position: absolute;
+              left: 6px;
+              border-radius: 0;
+              top: -3px;
+              animation-duration: 0.3s;
+              animation-name: spin;
+              transform: rotate(45deg);
             }
-        }
+          }
     }
     .GlobalStyled_modal {
         visibility: hidden;
@@ -149,5 +152,18 @@ export const AppStyled = styled.div`
             max-height: 99em;
             transition: max-height .5s ease-in-out;
           }
+    }
+    @keyframes spin { 
+      from {
+        clip-path: inset(78% 100% 0% 0%);
+      } 
+      
+      20%{
+        clip-path: inset(78% 0% 0% 0%);
+            
+      }
+      to {
+        clip-path: inset(0% 0% 0% 0%);
+      } 
     }
 `;

@@ -7,6 +7,8 @@ export const AppStyled = styled.div`
     position: relative;
     margin-bottom: 55px;
     min-height: calc(100vh - 20px);
+    max-width: 570px;
+    margin: 0 auto;
     hr{
         border: none;
         margin: 3px;
@@ -15,7 +17,25 @@ export const AppStyled = styled.div`
         display: none;
     }
     .done {
-        text-decoration: line-through;
+      position: relative;
+      > span {
+        position: relative;
+      }
+    }
+    
+    .done > span:after {
+      content: ' ';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: black;
+      animation-name: strike;
+      animation-duration: 0.4s;
+      animation-timing-function: linear;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards; 
     }
     .AppStyled_add-button {
         position: fixed;
@@ -141,6 +161,7 @@ export const AppStyled = styled.div`
             left: 50%;
             box-shadow: 0px 4px 20px 5px rgb(0 0 0 / 29%), 0 19px 43px 0px rgb(0 0 0 / 15%);
             transition: top 0.3s ease-out;
+            max-width: 490px;
         }
     }
     .GlobalStyled_collapse {
@@ -165,5 +186,9 @@ export const AppStyled = styled.div`
       to {
         clip-path: inset(0% 0% 0% 0%);
       } 
+    }
+    @keyframes strike{
+      0%   { width : 0; }
+      100% { width: 100%; }
     }
 `;

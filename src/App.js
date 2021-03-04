@@ -124,7 +124,7 @@ function App() {
 
         console.log(models);
 
-        console.log('reading-todos -> check if needs to change date_changed');
+        console.log('reading-todos -> check if needs to change date_changed and status back to active');
         const checkData = async () => {
             return Promise.all(models.map((model) => {
                 return setTodoDateEnd(model);

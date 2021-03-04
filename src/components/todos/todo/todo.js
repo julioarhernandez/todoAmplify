@@ -57,11 +57,12 @@ const TodoComponent = ({
 
     const overdue = ({date}) => {
         // if todos date is greater than today it means the todo is overdue
-        return (differenceBetweenTodayAndDate(date) < 0);
+        // console.log('its ', differenceBetweenTodayAndDate(date), date);
+        return (differenceBetweenTodayAndDate(date) <= 0);
     };
 
     const overdueAmount = (days, freq) => {
-        const difference = Math.abs(days + freq);
+        const difference = (days === 0) ? 0 : Math.abs(days + freq);
         return ((difference == 0) ? "Today" : `${difference} ${daySuffix(difference)}`);
     };
 

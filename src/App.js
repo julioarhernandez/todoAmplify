@@ -24,7 +24,7 @@ function App() {
     const [todoForEdit, setTodoForEdit] = useState('');
 
     useEffect(() => {
-        // Get all todos
+
         readTodos();
     }, []);
 
@@ -76,10 +76,11 @@ function App() {
             updated = true;
             const newDate = setNewDate({date: d.date, freq: d.date_freq});
             console.log('updating todo date changed');
-            return updateTodoDate({
+            return updateTodoStatusAndItems({
                 todoID: d.id,
                 date: newDate
             }).then(() => {
+                console.log('everybody todo and items updated');
                 return Promise.resolve("reload");
             });
         }
@@ -195,13 +196,45 @@ function App() {
         );
     }
 
-    async function updateTodoDate({todoID, date}) {
+    async function updateTodoStatusAndItems({todoID, date}) {
         const original = await DataStore.query(Todo, todoID);
-        await DataStore.save(
-            Todo.copyOf(original, updated => {
-                updated.date = date;
-            })
-        );
+        const originalItems = await DataStore.query(Items, c => c.todoID("eq", todoID));
+        try {
+            console.log('updateing todo and items');
+            // updating todo date and status
+            const todosUpdated = await DataStore.save(
+                Todo.copyOf(original, updated => {
+                    updated.date = date;
+                    updated.status = 'active';
+                })
+            );
+
+            const itemsActivated = async () => {
+                return Promise.all(originalItems.map(async (item) => {
+                    return await DataStore.save(
+                        Items.copyOf(item, updated => {
+                            updated.status = 'active';
+                        })
+                    );
+                }));
+            };
+
+             return Promise.all([itemsActivated(), todosUpdated]);
+
+            // const itemsUpdated = originalItems.map(async (item) => {
+            //     await DataStore.save(
+            //         Items.copyOf(original, updated => {
+            //             updated.status = 'active';
+            //         })
+            //     );
+            // });
+
+            // const itemsUpdatedPromise = async () => Promise.all(itemsUpdated);
+            // return Promise.all([todosUpdated, itemsUpdatedPromise]);
+        }catch (e) {
+            console.log(e)
+        }
+
     }
 
     async function deleteTodo(itemId) {

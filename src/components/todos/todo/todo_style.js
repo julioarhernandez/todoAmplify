@@ -23,7 +23,8 @@ export const TodoStyled = styled.div`
         h1{
             margin: 0;
             text-transform: capitalize;  
-        }
+            line-height: 1.3;
+          }
         &-date {
             font-size: 14px;
             img {

@@ -30,7 +30,7 @@ const TodoEdit = ({editTodoFn, todoData}) => {
                         <input name="name" placeholder="Todo Name" className="GlobalStyled-input" value={formData.name} onChange={changeData}/>
                     </div>
                     <div className="TodoEditStyled_form-group">
-                        <div className="TodoEditStyled_form-group_item">
+                        <div className="TodoEditStyled_form-group_item -half">
                             <select className="GlobalStyled-input" name="frequency" onChange={changeData}
                                     required="required" value={formData.frequency || (formData.date_freq ? "Every" : "Once")}>
                                 <option value="Once">
@@ -41,13 +41,13 @@ const TodoEdit = ({editTodoFn, todoData}) => {
                                 </option>
                             </select>
                         </div>
-                            <div className={classNames('TodoEditStyled_form-group_item', {hide: formData.frequency === 'Once'})}>
+                            <div className={classNames('TodoEditStyled_form-group_item -half', {hide: formData.frequency === 'Once'})}>
                             <input name="date_freq" type="number" className="GlobalStyled-input" step="1"
                                    value={formData.date_freq} onChange={changeData}/>
                         </div>
                     </div>
                     <div className="TodoEditStyled_form-group">
-                        <div className="TodoEditStyled_form-group_item">
+                        <div className="TodoEditStyled_form-group_item -full">
                             <input name="date" type="date" className="GlobalStyled-input" required
                                    value={formData.date} onChange={changeData}/>
                         </div>

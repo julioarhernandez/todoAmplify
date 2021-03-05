@@ -5,6 +5,7 @@ export const TodoStyled = styled.div`
     padding: 15px;
     background-color: rgb(128 128 128 / 20%);
     border-radius: 5px;
+    border: 1px solid transparent;
     &:not(:last-child){
         margin-bottom: 20px;
     }

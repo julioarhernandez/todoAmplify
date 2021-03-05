@@ -178,7 +178,6 @@ function App() {
             updateTodoById(todoData).then(() => {
                 readTodos();
             });
-
         }
         if (action === 'delete') {
             deleteTodo(todoData.id);
@@ -220,17 +219,6 @@ function App() {
             };
 
              return Promise.all([itemsActivated(), todosUpdated]);
-
-            // const itemsUpdated = originalItems.map(async (item) => {
-            //     await DataStore.save(
-            //         Items.copyOf(original, updated => {
-            //             updated.status = 'active';
-            //         })
-            //     );
-            // });
-
-            // const itemsUpdatedPromise = async () => Promise.all(itemsUpdated);
-            // return Promise.all([todosUpdated, itemsUpdatedPromise]);
         }catch (e) {
             console.log(e)
         }

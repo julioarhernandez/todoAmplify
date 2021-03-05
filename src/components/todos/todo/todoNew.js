@@ -36,7 +36,7 @@ const TodoNew = ({newTodoFn}) => {
                         <input name="name" placeholder="Todo Name" className="GlobalStyled-input" onChange={dataChanged} required="required"/>
                     </div>
                     <div className="TodoNewStyled_form-group">
-                        <div className="TodoNewStyled_form-group_item">
+                        <div className="TodoNewStyled_form-group_item -half">
                             <select className="GlobalStyled-input" name="frequency" onChange={dataChanged}
                                     required="required">
                                 <option>
@@ -47,13 +47,13 @@ const TodoNew = ({newTodoFn}) => {
                                 </option>
                             </select>
                         </div>
-                        <div className={classNames('TodoNewStyled_form-group_item', {hide: (formData.frequency === 'Once' || formData.freqNumber === 0)})}>
+                        <div className={classNames('TodoNewStyled_form-group_item -half', {hide: (formData.frequency === 'Once' || formData.freqNumber === 0)})}>
                             <input name="freqNumber" type="number" className="GlobalStyled-input" step="1"
                                    onChange={dataChanged} ref={freqNum}/>
                         </div>
                     </div>
                     <div className="TodoNewStyled_form-group">
-                        <div className="TodoNewStyled_form-group_item">
+                        <div className="TodoNewStyled_form-group_item -full">
                             <input name="startDate" type="date" className="GlobalStyled-input" onChange={dataChanged} required/>
                         </div>
                     </div>

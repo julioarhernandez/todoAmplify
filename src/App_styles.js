@@ -5,10 +5,13 @@ export const AppStyled = styled.div`
     font-family: 'Saira', sans-serif;
     padding: 10px;
     position: relative;
-    margin-bottom: 55px;
     min-height: calc(100vh - 20px);
     max-width: 570px;
-    margin: 0 auto;
+    margin: 0 auto 55px auto;
+    box-sizing: border-box;
+    *, *:after, *:before {
+        box-sizing: border-box;
+    }
     hr{
         border: none;
         margin: 3px;
@@ -68,6 +71,7 @@ export const AppStyled = styled.div`
         border: 1px solid rgb(0 0 0 / 37%);
         border-radius: 3px;
         outline: none;
+        width: 100%;
     }
     .GlobalStyled-button{
         padding: 15px 20px;
@@ -121,15 +125,15 @@ export const AppStyled = styled.div`
             }
             &:after {
               display: inline-block;
-              height: 11px;
-              width: 5px;
-              border-bottom: 3px solid #ffffff;
-              border-right: 3px solid #ffffff;
-              background-color: transparent;
-              position: absolute;
-              left: 6px;
-              border-radius: 0;
-              top: -3px;
+                height: 14px;
+                width: 7px;
+                border-bottom: 3px solid #ffffff;
+                border-right: 3px solid #ffffff;
+                background-color: transparent;
+                position: absolute;
+                left: 6px;
+                border-radius: 0;
+                top: -3px;
               animation-duration: 0.3s;
               animation-name: spin;
               transform: rotate(45deg);
@@ -161,7 +165,7 @@ export const AppStyled = styled.div`
             left: 50%;
             box-shadow: 0px 4px 20px 5px rgb(0 0 0 / 29%), 0 19px 43px 0px rgb(0 0 0 / 15%);
             transition: top 0.3s ease-out;
-            max-width: 490px;
+            max-width: 290px;
         }
     }
     .GlobalStyled_collapse {

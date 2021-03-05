@@ -21,6 +21,18 @@ export const TodoNewStyled = styled.div`
         margin-bottom: 15px;
         display: flex;
     }
+    .TodoNewStyled_form-group_item { 
+        &:not(:last-child) { 
+            margin-right: 10px;
+        }
+        &.-half {
+          width: 50%;
+        }
+        &.-full {
+          width: 100%;
+        }
+        
+    }
     .TodoNewStyled_form-group_item:not(:last-child) { 
         margin-right: 10px;
     }
